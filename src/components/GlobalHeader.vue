@@ -16,7 +16,7 @@
             <div class="title">彭逸钊</div>
           </div>
         </a-menu-item>
-        <a-menu-item v-for="item in routes" :key="item.path">
+        <a-menu-item v-for="item in visibleRoutes" :key="item.path">
           {{ item.name }}
         </a-menu-item>
       </a-menu>
@@ -42,20 +42,20 @@ const store = useStore();
 console.log(store.state.user.loginUser);
 
 // 展示在菜单的路由数组
-// const visibleRoutes = computed(() => {
-//   return routes.filter((item, index) => {
-//     if (item.meta?.hideInMenu) {
-//       return false;
-//     }
-//     // 根据权限过滤菜单
-//     if (
-//       !checkAccess(store.state.user.loginUser, item?.meta?.access as string)
-//     ) {
-//       return false;
-//     }
-//     return true;
-//   });
-// });
+const visibleRoutes = computed(() => {
+  return routes.filter((item, index) => {
+    if (item.meta?.hideInMenu) {
+      return false;
+    }
+    // 根据权限过滤菜单
+    // if (
+    //   !checkAccess(store.state.user.loginUser, item?.meta?.access as string)
+    // ) {
+    //   return false;
+    // }
+    return true;
+  });
+});
 
 // 默认主页
 const selectedKeys = ref(["/"]);
