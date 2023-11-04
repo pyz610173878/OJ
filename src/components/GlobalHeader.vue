@@ -1,16 +1,8 @@
 <template>
-      <a-row id="globalHeader" align="center" :wrap="false">
+  <a-row id="globalHeader" align="center" :wrap="false">
     <a-col flex="auto">
-      <a-menu
-        mode="horizontal"
-        :selected-keys="selectedKeys"
-        @menu-item-click="doMenuClick"
-      >
-        <a-menu-item
-          key="0"
-          :style="{ padding: 0, marginRight: '38px' }"
-          disabled
-        >
+      <a-menu mode="horizontal" :selected-keys="selectedKeys" @menu-item-click="doMenuClick">
+        <a-menu-item key="0" :style="{ padding: 0, marginRight: '38px' }" disabled>
           <div class="title-bar">
             <img class="logo" src="" />
             <div class="title">彭逸钊</div>
@@ -34,12 +26,19 @@ import { routes } from "../router/routers";
 import { useRoute, useRouter } from "vue-router";
 import { computed, ref } from "vue";
 import { useStore } from "vuex";
+import ACCESS_ENUM from "../assets/accessEnum";
+import checkAccess from "../assets/checkAccess";
+import { reactive, getCurrentInstance, onBeforeUnmount } from 'vue'
+
 
 const router = useRouter();
 const store = useStore();
 
+const instance = getCurrentInstance();
+const axios = require('axios').default;
 
-console.log(store.state.user.loginUser);
+
+
 
 // 展示在菜单的路由数组
 const visibleRoutes = computed(() => {
@@ -48,11 +47,11 @@ const visibleRoutes = computed(() => {
       return false;
     }
     // 根据权限过滤菜单
-    // if (
-    //   !checkAccess(store.state.user.loginUser, item?.meta?.access as string)
-    // ) {
-    //   return false;
-    // }
+    if (
+      !checkAccess(store.state.user.loginUser, item?.meta?.access as string)
+    ) {
+      return false;
+    }
     return true;
   });
 });
@@ -67,12 +66,12 @@ router.afterEach((to, from, failure) => {
 
 console.log();
 
-// setTimeout(() => {
-//   store.dispatch("user/getLoginUser", {
-//     userName: "鱼皮管理员",
-//     userRole: ACCESS_ENUM.ADMIN,
-//   });
-// }, 3000);
+setTimeout(() => {
+  store.dispatch("user/getLoginUser", {
+    userName: "鱼皮管理员",
+    userRole: ACCESS_ENUM.ADMIN,
+  });
+}, 3000);
 
 const doMenuClick = (key: string) => {
   router.push({
