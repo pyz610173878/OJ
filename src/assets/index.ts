@@ -9,6 +9,7 @@ router.beforeEach(async (to, from, next) => {
   // //如果之前没登陆过，自动登录
   if (!loginUser || !loginUser.userRole) {
     // 加 await 是为了等用户登录成功之后，再执行后续的代码
+    // 如果正确想后端发起请求
     await store.dispatch("user/getLoginUser");
     loginUser = store.state.user.loginUser;
   }
@@ -22,6 +23,7 @@ router.beforeEach(async (to, from, next) => {
       loginUser.userRole === ACCESS_ENUM.NOT_LOGIN
     ) {
       next(`/user/login?redirect=${to.fullPath}`);
+    //  强制跳转到登录界面
       return;
     }
     // 如果已经登陆了，但是权限不足，那么跳转到无权限页面

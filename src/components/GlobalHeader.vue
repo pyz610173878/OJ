@@ -2,10 +2,10 @@
   <a-row id="globalHeader" align="center" :wrap="false">
     <a-col flex="auto">
       <a-menu mode="horizontal" :selected-keys="selectedKeys" @menu-item-click="doMenuClick">
-        <a-menu-item key="0" :style="{ padding: 0, marginRight: '38px' }" disabled>
+        <a-menu-item key="0" :style="{ padding: 0, marginRight: '38px' }">
           <div class="title-bar">
-            <img class="logo" src="" />
-            <div class="title">彭逸钊</div>
+            <a href="http://localhost:8080/"><img class="logo" src=""></a>
+            <div class="title">图标</div>
           </div>
         </a-menu-item>
         <a-menu-item v-for="item in visibleRoutes" :key="item.path">
@@ -14,8 +14,18 @@
       </a-menu>
     </a-col>
     <a-col flex="100px">
-      <div>
-        {{ store.state.user?.loginUser?.userName ?? "未登录" }}
+      <div class="Login-box">
+        <!-- 这里应该是路由跳转 跳转到用户登录与注册界面 -->
+        <a-button type="primary" shape="circle" class="Login-btn"
+        @click=""
+        >
+          <icon-plus />
+          <span class="Login-text">
+            {{ store.state.user?.loginUser?.userName ?? "登录" }}
+          </span>
+        </a-button>
+
+
       </div>
     </a-col>
   </a-row>
@@ -78,6 +88,14 @@ const doMenuClick = (key: string) => {
     path: key,
   });
 };
+
+
+// 登录与注册事件
+
+// 直接路由
+
+
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -94,5 +112,13 @@ const doMenuClick = (key: string) => {
 
 .logo {
   height: 48px;
+}
+
+
+/* 登录与注册按钮 */
+
+
+.Login-text {
+  font-size: 12px;
 }
 </style>
